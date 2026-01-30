@@ -1,0 +1,32 @@
+﻿@using System.Security.Claims
+<AuthorizeView>
+    <Authorized>
+        @foreach (var identity in context.User.Identities)
+        {
+            <span>Name: @identity.Name</span><br />
+            <span>Roles: @string.Join(", ", identity.FindAll(ClaimTypes.Role).Select(r => r.Value))</span><br />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Claim Type</th>
+                        <th>Claim Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var claim in identity.Claims)
+                    {
+                        <tr>
+                            <td>@claim.Type</td>
+                            <td>@claim.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <Authorizing>Authorizing...</Authorizing>
+    <NotAuthorized>
+        The claims viewer can only be used by authenticated users.
+        If you see this, then the policies of the authorization options did not affect the blazor components.
+    </NotAuthorized>
+</AuthorizeView>
