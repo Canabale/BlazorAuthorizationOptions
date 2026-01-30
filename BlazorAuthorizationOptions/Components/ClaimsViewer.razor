@@ -28,8 +28,12 @@
     </Authorized>
     <Authorizing>Authorizing...</Authorizing>
     <NotAuthorized>
-        <p>Unauthorized: @this.NavigationManager.ToBaseRelativePath(this.NavigationManager.Uri)</p>
-        If you see this, then the defined policies from the authorization builder did not affect the blazor components.
+        <p>
+            Unauthorized: @this.NavigationManager.ToBaseRelativePath(this.NavigationManager.Uri)
+        </p>
+        <p style="color:#BB0000;">
+            If you see this, then the defined policies from the authorization builder did not affect the blazor components.
+        </p>
     </NotAuthorized>
 </AuthorizeView>
 

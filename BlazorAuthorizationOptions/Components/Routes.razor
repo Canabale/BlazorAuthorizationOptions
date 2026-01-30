@@ -5,8 +5,12 @@
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <Authorizing>Authorizing...</Authorizing>
                 <NotAuthorized>
-                    <p>Unauthorized: @NavigationManager.ToBaseRelativePath(NavigationManager.Uri)</p>
-                    If you see this, then the `AuthorizeRouteView` handled navigation correctly.
+                    <p>
+                        Unauthorized: @this.NavigationManager.ToBaseRelativePath(this.NavigationManager.Uri)
+                    </p>
+                    <p style="color:#00BB00;">
+                        If you see this, then the `AuthorizeRouteView` handled navigation correctly.
+                    </p>
                 </NotAuthorized>
             </AuthorizeRouteView>
         </Found>
