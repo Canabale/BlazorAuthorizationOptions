@@ -1,5 +1,5 @@
 ﻿@using System.Security.Claims
-<AuthorizeView>
+<AuthorizeView Roles="@this.Roles" Policy="@this.Policy">
     <Authorized>
         @foreach (var identity in context.User.Identities)
         {
@@ -26,7 +26,16 @@
     </Authorized>
     <Authorizing>Authorizing...</Authorizing>
     <NotAuthorized>
-        The claims viewer can only be used by authenticated users.
+        You are lacking the permission to see the claims.
         If you see this, then the policies of the authorization options did not affect the blazor components.
     </NotAuthorized>
 </AuthorizeView>
+
+@code
+{
+    [Parameter]
+    public string? Roles { get; set; }
+
+    [Parameter]
+    public string? Policy { get; set; }
+}
