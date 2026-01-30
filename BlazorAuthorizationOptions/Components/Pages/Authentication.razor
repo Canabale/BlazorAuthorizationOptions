@@ -23,8 +23,11 @@
         <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Moderator")">
             Moderator
         </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=User")">
-            User
+        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Member")">
+            Member
+        </a>
+        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Guest")">
+            Guest
         </a>
     </NotAuthorized>
 </AuthorizeView>

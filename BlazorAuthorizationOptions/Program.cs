@@ -24,7 +24,12 @@ builder.Services
 
 builder.Services.AddAuthorization(options => 
 {
-    options.DefaultPolicy = options.FallbackPolicy = new AuthorizationPolicyBuilder()
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .RequireRole("Member")
+        .Build();
+
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
         .RequireAuthenticatedUser()
         .Build();
 });

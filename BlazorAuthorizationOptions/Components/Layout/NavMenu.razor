@@ -1,5 +1,9 @@
 ﻿@using BlazorAuthorizationOptions.Components.Pages;
-
+@using BlazorAuthorizationOptions.Components.Pages.Authenticated;
+@{
+    const string StyleAuthenticated = "color:#006600;";
+    const string StyleUnauthenticated = "color:#660000;";
+}
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies">
@@ -13,9 +17,7 @@
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                Home
-            </NavLink>
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">Home</NavLink>
         </div>
 
         <div class="nav-item px-3">
@@ -30,12 +32,44 @@
                 </AuthorizeView>
             </NavLink>
         </div>
+        
+        <hr/>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                Weather
-            </NavLink>
-        </div>
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresAdmin.Route" style="@StyleAuthenticated">Admin</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresModerator.Route" style="@StyleAuthenticated">Moderator</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresMember.Route" style="@StyleAuthenticated">Member</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresDefaultPolicy.Route" style="@StyleAuthenticated">Default Policy</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresDefaultPolicy.Route" style="@StyleAuthenticated">Fallback Policy</NavLink>
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresAdmin.Route" style="@StyleUnauthenticated">Admin</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresModerator.Route" style="@StyleUnauthenticated">Moderator</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresMember.Route" style="@StyleUnauthenticated">Member</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresDefaultPolicy.Route" style="@StyleUnauthenticated">Default Policy</NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="@RequiresDefaultPolicy.Route" style="@StyleUnauthenticated">Fallback Policy</NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
     </nav>
 </div>
-

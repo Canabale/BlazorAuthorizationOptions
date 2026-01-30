@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace BlazorAuthorizationOptions.Components.Pages.Authenticated;
 
-[Authorize(Roles = "User")]
+[Authorize(Roles = "Member")]
 [Route(Route)]
-public partial class RequiresUser : ComponentBase
+public partial class RequiresMember : ComponentBase
 {
-    public const string Route = "/requires/user";
+    public const string Route = "/requires/member";
 }
