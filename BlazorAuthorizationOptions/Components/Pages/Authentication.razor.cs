@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using System.Data;
-using System.Security.Claims;
 
 namespace BlazorAuthorizationOptions.Components.Pages;
 
