@@ -43,7 +43,7 @@ file static class Users
 
     public static ClaimsPrincipal Member { get; } = CreateClaimsPrincipal("Mario", "Rossi", nameof(Member));
 
-    public static ClaimsPrincipal Guest { get; } = CreateClaimsPrincipal("Mario", "Rossi");
+    public static ClaimsPrincipal Guest { get; } = CreateClaimsPrincipal("Jan", "Kowalski");
 
     public static ClaimsPrincipal? FindByRole(string role)
         => typeof(Users).GetProperty(role)?.GetValue(null) as ClaimsPrincipal;
