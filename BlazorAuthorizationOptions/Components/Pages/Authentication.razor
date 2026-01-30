@@ -2,32 +2,5 @@
 @using BlazorAuthorizationOptions.Controllers
 
 <PageTitle>Authentication</PageTitle>
-<AuthorizeView Policy="Fallback">
-    <Authorized>
-        <h1>Authenticated</h1>
-        <p>
-            Name: @context.User.Identity!.Name <br/>
-            Roles: @string.Join(", ", context.User.FindAll(ClaimTypes.Role).Select(r => r.Value))
-        </p>
-
-        <a class="btn btn-primary" href="@AuthenticationController.SignOutRoute">
-            Sign Out
-        </a>
-    </Authorized>
-    <NotAuthorized>
-        <h1>Not Authenticated</h1>
-        <p>Please select the user to sign in:</p>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Admin")">
-            Admin
-        </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Moderator")">
-            Moderator
-        </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Member")">
-            Member
-        </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Guest")">
-            Guest
-        </a>
-    </NotAuthorized>
-</AuthorizeView>
+<h1>Authentication</h1>
+<Authenticator/>
