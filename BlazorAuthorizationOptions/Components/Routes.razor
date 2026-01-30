@@ -1,6 +1,24 @@
-﻿<Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
-    <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
-</Router>
+﻿@using System.Reflection
+@inject NavigationManager NavigationManager;
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@GetLayout(routeData.PageType)">
+                <Authorizing>Authorizing...</Authorizing>
+                <NotAuthorized>
+                    @{ this.NavigationManager.NavigateTo(Pages.Authentication.Route); }
+                </NotAuthorized>
+            </AuthorizeRouteView>
+        </Found>
+    </Router>
+</CascadingAuthenticationState>
+
+@code 
+{
+    /// <summary>Gets the layout of the specified page type.</summary>
+    /// <param name="pageType">The page type to get the layout for.</param>
+    /// <returns>The type of the layout.</returns>
+    private static Type GetLayout(Type pageType)
+        => pageType.GetCustomAttributes<LayoutAttribute>(true).FirstOrDefault()?.LayoutType ?? typeof(MainLayout);
+}

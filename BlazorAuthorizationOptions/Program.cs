@@ -1,27 +1,66 @@
 using BlazorAuthorizationOptions.Components;
+using BlazorAuthorizationOptions.Components.Pages;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Connections;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
+builder.Services
+    .AddAuthentication(options => 
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    })
+    .AddCookie(options => 
+    {
+        options.LoginPath = Authentication.Route;
+        options.LogoutPath = Authentication.Route;
+        options.Cookie.IsEssential = true;
+    });
+
+builder.Services.AddAuthorization(options => 
+{
+    options.DefaultPolicy = options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode().Add(endpointBuilder =>
+{
+    // Thanks @javiercn for these workarounds. <3
+    var dispatcherOptions = endpointBuilder.Metadata.OfType<HttpConnectionDispatcherOptions>().FirstOrDefault();
+    if (dispatcherOptions is not null)
+    {
+        // TODO: This is a part of the SignalR configuration.
+        // Configure it properly once the underlying issue is resolved:
+        // https://github.com/dotnet/aspnetcore/issues/63520
+        dispatcherOptions.CloseOnAuthenticationExpiration = true;
+    }
 
-app.Run();
+    if (endpointBuilder is RouteEndpointBuilder routeEndpointBuilder)
+    {
+        // TODO: This is a part of the Blazor configuration.
+        // Configure it properly once the underlying issue is resolved:
+        // https://github.com/dotnet/aspnetcore/issues/57193
+        var rawPattern = routeEndpointBuilder.RoutePattern!.RawText;
+        if (!string.IsNullOrEmpty(rawPattern) && rawPattern.StartsWith("/_blazor", StringComparison.OrdinalIgnoreCase))
+        {
+            routeEndpointBuilder.Metadata.Add(new AllowAnonymousAttribute());
+        }
+    }
+});
+
+await app.RunAsync();

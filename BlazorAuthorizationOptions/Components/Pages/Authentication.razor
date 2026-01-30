@@ -1,0 +1,22 @@
+﻿@using System.Security.Claims
+@namespace BlazorAuthorizationOptions.Components.Pages
+
+<PageTitle>Authentication</PageTitle>
+<AuthorizeView>
+    <Authorized>
+        <h1>Authenticated</h1>
+        <p>
+            Name: @context.User.Identity!.Name <br/>
+            Roles: @string.Join(", ", context.User.FindAll(ClaimTypes.Role).Select(r => r.Value)))
+        </p>
+
+        <button class="btn btn-primary" @onclick="this.SignOutAsync">Sign Out</button>
+    </Authorized>
+    <NotAuthorized>
+        <h1>Not Authenticated</h1>
+        <p>Please select the user to sign in:</p>
+        <button class="btn btn-primary" @onclick="() => this.SignInAsync(Admin)">Admin</button>
+        <button class="btn btn-primary" @onclick="() => this.SignInAsync(Moderator)">Moderator</button>
+        <button class="btn btn-primary" @onclick="() => this.SignInAsync(User)">User</button>
+    </NotAuthorized>
+</AuthorizeView>

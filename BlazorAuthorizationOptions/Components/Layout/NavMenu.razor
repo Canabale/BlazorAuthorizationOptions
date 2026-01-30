@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using BlazorAuthorizationOptions.Components.Pages;
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies">
             AuthorizationOptions in Blazor
@@ -17,8 +19,8 @@
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="signin">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> signin
+            <NavLink class="nav-link" href="@Authentication.Route">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> @nameof(Authentication)
             </NavLink>
         </div>
 
