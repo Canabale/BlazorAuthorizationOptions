@@ -5,5 +5,5 @@ namespace BlazorAuthorizationOptions.Components.Pages.Authenticated;
 [Route(Route)]
 public partial class RequiresFallbackPolicy : ComponentBase
 {
-    public const string Route = "/requires/fallback-policy";
+    public const string Route = "/policy/fallback";
 }

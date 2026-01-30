@@ -7,5 +7,5 @@ namespace BlazorAuthorizationOptions.Components.Pages.Authenticated;
 [Route(Route)]
 public partial class RequiresModerator : ComponentBase
 {
-    public const string Route = "/requires/moderator";
+    public const string Route = "/role/moderator";
 }

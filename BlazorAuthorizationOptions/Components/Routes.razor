@@ -1,10 +1,11 @@
-﻿<CascadingAuthenticationState>
+﻿@inject NavigationManager NavigationManager;
+<CascadingAuthenticationState>
     <Router AppAssembly="typeof(Program).Assembly" NotFoundPage="typeof(Pages.NotFound)">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <Authorizing>Authorizing...</Authorizing>
                 <NotAuthorized>
-                    <p>You are not authorized to see the page: @routeData.Template</p>
+                    <p>Unauthorized: @NavigationManager.ToBaseRelativePath(NavigationManager.Uri)</p>
                     <Authenticator/>
                 </NotAuthorized>
             </AuthorizeRouteView>
