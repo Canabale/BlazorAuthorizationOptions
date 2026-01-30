@@ -1,4 +1,6 @@
 ﻿@using System.Security.Claims
+@inject NavigationManager NavigationManager;
+
 <AuthorizeView Roles="@this.Roles" Policy="@this.Policy">
     <Authorized>
         @foreach (var identity in context.User.Identities)
@@ -26,8 +28,8 @@
     </Authorized>
     <Authorizing>Authorizing...</Authorizing>
     <NotAuthorized>
-        You are lacking the permission to see the claims.
-        If you see this, then the policies of the authorization options did not affect the blazor components.
+        <p>Unauthorized: @this.NavigationManager.ToBaseRelativePath(this.NavigationManager.Uri)</p>
+        If you see this, then the defined policies from the authorization builder did not affect the blazor components.
     </NotAuthorized>
 </AuthorizeView>
 
