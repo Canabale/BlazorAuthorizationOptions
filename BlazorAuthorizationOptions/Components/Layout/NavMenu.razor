@@ -3,7 +3,7 @@
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies">
+        <a class="navbar-brand" href="https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies" target="_blank">
             AuthorizationOptions
         </a>
     </div>
@@ -14,28 +14,19 @@
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="nav flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">Home</NavLink>
+            <NavLink class="nav-link" href="@RequiresAdmin.Route"><AuthorizeColor Roles="Admin">Admin</AuthorizeColor></NavLink>
         </div>
-
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="@Authentication.Route">
-                <AuthorizeView Policy="Fallback">
-                    <Authorized>
-                        Account
-                    </Authorized>
-                    <NotAuthorized>
-                        Sign In
-                    </NotAuthorized>
-                </AuthorizeView>
-            </NavLink>
+            <NavLink class="nav-link" href="@RequiresModerator.Route"><AuthorizeColor Roles="Moderator">Moderator</AuthorizeColor></NavLink>
         </div>
-        
-        <hr/>
-
-        <AuthorizeNavLink Roles="Admin" Href="@RequiresAdmin.Route">Admin</AuthorizeNavLink>
-        <AuthorizeNavLink Roles="Moderator" Href="@RequiresModerator.Route">Moderator</AuthorizeNavLink>
-        <AuthorizeNavLink Roles="Member" Href="@RequiresMember.Route">Member</AuthorizeNavLink>
-        <AuthorizeNavLink Policy="Default" Href="@RequiresDefaultPolicy.Route">Default Policy</AuthorizeNavLink>
-        <AuthorizeNavLink Policy="Fallback" Href="@RequiresFallbackPolicy.Route">Fallback Policy</AuthorizeNavLink>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="@RequiresMember.Route"><AuthorizeColor Roles="Member">Member</AuthorizeColor></NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="@RequiresDefaultPolicy.Route"><AuthorizeColor Policy="Default">Default Policy</AuthorizeColor></NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="@RequiresFallbackPolicy.Route"><AuthorizeColor Policy="Fallback">Fallback Policy</AuthorizeColor></NavLink>
+        </div>
     </nav>
 </div>

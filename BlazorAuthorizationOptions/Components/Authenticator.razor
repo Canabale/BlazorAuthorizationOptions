@@ -1,34 +1,29 @@
 ﻿@using BlazorAuthorizationOptions.Controllers
 @using System.Security.Claims
 
+
+<p>Set authenticated state:</p>
+<a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Admin")">
+    Admin <br />
+    <small style="opacity:0.6;">Role</small>
+</a>
+<a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Moderator")">
+    Moderator  <br />
+    <small style="opacity:0.6;">Role</small>
+</a>
+<a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Member")">
+    Member <br />
+    <small style="opacity:0.6;">Role, Default Policy</small>
+</a>
+<a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Guest")">
+    Guest <br />
+    <small style="opacity:0.6;">Role, Fallback Policy</small>
+</a>
 <AuthorizeView Policy="Fallback">
     <Authorized>
-        <p>
-            Name: @context.User.Identity!.Name <br />
-            Roles: @string.Join(", ", context.User.FindAll(ClaimTypes.Role).Select(r => r.Value))
-        </p>
-
         <a class="btn btn-primary" href="@AuthenticationController.SignOutRoute">
-            Sign Out
+            Sign Out <br />
+            <small style="opacity:0.6;">Unauthenticated</small>
         </a>
     </Authorized>
-    <NotAuthorized>
-        <p>Please select the user to sign in:</p>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Admin")">
-            Admin <br />
-            <small style="opacity:0.6;">Role</small>
-        </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Moderator")">
-            Moderator  <br />
-            <small style="opacity:0.6;">Role</small>
-        </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Member")">
-            Member <br />
-            <small style="opacity:0.6;">Role, Default Policy</small>
-        </a>
-        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Guest")">
-            Guest <br/>
-            <small style="opacity:0.6;">Role, Fallback Policy</small>
-        </a>
-    </NotAuthorized>
 </AuthorizeView>

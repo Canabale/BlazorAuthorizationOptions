@@ -9,8 +9,8 @@ namespace BlazorAuthorizationOptions.Controllers;
 [AllowAnonymous]
 public class AuthenticationController : Controller
 {
-    public const string SignInRoute = $"{Components.Pages.Authentication.Route}/sign-in";
-    public const string SignOutRoute = $"{Components.Pages.Authentication.Route}/sign-out";
+    public const string SignInRoute = "/sign-in";
+    public const string SignOutRoute = "/sign-out";
 
     [Route(SignInRoute)]
     public async Task<IActionResult> SignInAsync(string loginHint)
@@ -19,7 +19,7 @@ public class AuthenticationController : Controller
         if (user is not null)
         {
             await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, user);
-            return this.Redirect(Components.Pages.Authentication.Route);
+            return this.Redirect("/");
         }
 
         return Ok($"The user {loginHint} does not exist.");
@@ -29,7 +29,7 @@ public class AuthenticationController : Controller
     public async Task<IActionResult> SignOutAsync()
     {
         await this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return this.Redirect(Components.Pages.Authentication.Route);
+        return this.Redirect("/");
     }
 }
 

@@ -1,5 +1,6 @@
 using BlazorAuthorizationOptions.Components;
 using BlazorAuthorizationOptions.Components.Pages;
+using BlazorAuthorizationOptions.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Connections;
@@ -17,8 +18,8 @@ builder.Services
     })
     .AddCookie(options =>
     {
-        options.LoginPath = Authentication.Route;
-        options.LogoutPath = Authentication.Route;
+        options.LoginPath = "/";
+        options.LogoutPath = AuthenticationController.SignOutRoute;
         options.Cookie.IsEssential = true;
     });
 
