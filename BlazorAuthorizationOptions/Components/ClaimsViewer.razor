@@ -5,8 +5,15 @@
     <Authorized>
         @foreach (var identity in context.User.Identities)
         {
-            <span>Name: @identity.Name</span><br />
-            <span>Roles: @string.Join(", ", identity.FindAll(ClaimTypes.Role).Select(r => r.Value))</span><br />
+            var roles = string.Join(", ", identity.FindAll(ClaimTypes.Role).Select(r => r.Value));
+            <p>
+                <span>@identity.Name</span>
+                @if (roles.Length > 0)
+                {
+                    <i>(@roles)</i>
+                }
+            </p>
+
             <table class="table">
                 <thead>
                     <tr>
