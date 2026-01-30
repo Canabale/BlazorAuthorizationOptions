@@ -15,16 +15,20 @@
     <NotAuthorized>
         <p>Please select the user to sign in:</p>
         <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Admin")">
-            Admin
+            Admin <br />
+            <small style="opacity:0.6;">Role</small>
         </a>
         <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Moderator")">
-            Moderator
+            Moderator  <br />
+            <small style="opacity:0.6;">Role</small>
         </a>
         <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Member")">
-            Member
+            Member <br />
+            <small style="opacity:0.6;">Role, Default Policy</small>
         </a>
         <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Guest")">
-            Guest
+            Guest <br/>
+            <small style="opacity:0.6;">Role, Fallback Policy</small>
         </a>
     </NotAuthorized>
 </AuthorizeView>
