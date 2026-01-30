@@ -2,7 +2,7 @@
 @using BlazorAuthorizationOptions.Controllers
 
 <PageTitle>Authentication</PageTitle>
-<AuthorizeView>
+<AuthorizeView Policy="Fallback">
     <Authorized>
         <h1>Authenticated</h1>
         <p>

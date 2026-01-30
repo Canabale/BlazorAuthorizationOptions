@@ -1,0 +1,22 @@
+﻿<AuthorizeView Roles="@this.Roles" Policy="@this.Policy">
+    <Authorized>
+        <NavLink class="nav-link" href="@Href" style="color:#006600;">@ChildContent</NavLink>
+    </Authorized>
+    <NotAuthorized>
+        <NavLink class="nav-link" href="@Href" style="color:#660000;">@ChildContent</NavLink>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Parameter]
+    public string? Roles { get; set; }
+
+    [Parameter]
+    public string? Policy { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+    
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

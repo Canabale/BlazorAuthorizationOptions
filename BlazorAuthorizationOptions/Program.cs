@@ -22,17 +22,9 @@ builder.Services
         options.Cookie.IsEssential = true;
     });
 
-builder.Services.AddAuthorization(options => 
-{
-    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .RequireRole("Member")
-        .Build();
-
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddDefaultPolicy("Default", policy => policy.RequireAuthenticatedUser().RequireRole("Member"))
+    .AddFallbackPolicy("Fallback", policy => policy.RequireAuthenticatedUser());
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
