@@ -1,4 +1,5 @@
-﻿@using System.Security.Claims
+﻿@using System.Security.Claims;
+@using BlazorAuthorizationOptions.Controllers
 
 <PageTitle>Authentication</PageTitle>
 <AuthorizeView>
@@ -6,16 +7,24 @@
         <h1>Authenticated</h1>
         <p>
             Name: @context.User.Identity!.Name <br/>
-            Roles: @string.Join(", ", context.User.FindAll(ClaimTypes.Role).Select(r => r.Value)))
+            Roles: @string.Join(", ", context.User.FindAll(ClaimTypes.Role).Select(r => r.Value))
         </p>
 
-        <button class="btn btn-primary" @onclick="this.SignOutAsync">Sign Out</button>
+        <a class="btn btn-primary" href="@AuthenticationController.SignOutRoute">
+            Sign Out
+        </a>
     </Authorized>
     <NotAuthorized>
         <h1>Not Authenticated</h1>
         <p>Please select the user to sign in:</p>
-        <button class="btn btn-primary" @onclick="() => this.SignInAsync(Admin)">Admin</button>
-        <button class="btn btn-primary" @onclick="() => this.SignInAsync(Moderator)">Moderator</button>
-        <button class="btn btn-primary" @onclick="() => this.SignInAsync(User)">User</button>
+        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Admin")">
+            Admin
+        </a>
+        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=Moderator")">
+            Moderator
+        </a>
+        <a class="btn btn-primary" href="@($"{AuthenticationController.SignInRoute}?loginHint=User")">
+            User
+        </a>
     </NotAuthorized>
 </AuthorizeView>

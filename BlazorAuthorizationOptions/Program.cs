@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllers();
 builder.Services
     .AddAuthentication(options =>
     {
@@ -40,6 +41,7 @@ app.UseAuthorization();
 app.UseAntiforgery();
 
 app.MapStaticAssets().AllowAnonymous();
+app.MapControllers();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode().Add(endpointBuilder =>
 {
     // Thanks @javiercn for these workarounds. <3
