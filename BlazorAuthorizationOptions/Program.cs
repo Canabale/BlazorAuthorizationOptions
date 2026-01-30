@@ -3,17 +3,18 @@ using BlazorAuthorizationOptions.Components.Pages;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Connections;
+using System.Collections.Immutable;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 builder.Services
-    .AddAuthentication(options => 
+    .AddAuthentication(options =>
     {
         options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
-    .AddCookie(options => 
+    .AddCookie(options =>
     {
         options.LoginPath = Authentication.Route;
         options.LogoutPath = Authentication.Route;
@@ -31,13 +32,14 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
+
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
 
-app.MapStaticAssets();
+app.MapStaticAssets().AllowAnonymous();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode().Add(endpointBuilder =>
 {
     // Thanks @javiercn for these workarounds. <3
@@ -55,8 +57,9 @@ app.MapRazorComponents<App>().AddInteractiveServerRenderMode().Add(endpointBuild
         // TODO: This is a part of the Blazor configuration.
         // Configure it properly once the underlying issue is resolved:
         // https://github.com/dotnet/aspnetcore/issues/57193
+        var whitelistedPrefixes = ImmutableArray.Create("/_blazor", "/_framework");
         var rawPattern = routeEndpointBuilder.RoutePattern!.RawText;
-        if (!string.IsNullOrEmpty(rawPattern) && rawPattern.StartsWith("/_blazor", StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrEmpty(rawPattern) && whitelistedPrefixes.Any(prefix => rawPattern.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)))
         {
             routeEndpointBuilder.Metadata.Add(new AllowAnonymousAttribute());
         }
