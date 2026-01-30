@@ -1,0 +1,36 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+<p>
+    I have the assumption that the
+    <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.authorization.authorizerouteview">AuthorizeRouteView</a>
+    solely relies on the
+    <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizeattribute">AuthorizeAttribute</a>.
+</p>
+<p>
+    If that would actually be the case, it would mean that it ignores the policies defined in the
+    <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizationoptions">AuthorizationOptions</a>.<br />
+    I am aware that authentication and authorization work differently in Blazor apps. 
+    <a href="https://github.com/javiercn">Javier Calvarro Nelson <i>(javiercn)</i></a>
+    literally opened up an <a href="https://github.com/dotnet/aspnetcore/issues/39932">issue</a>
+    because the current behavior confuses users. <br/>
+    To be honest, at this point I am among the confused ones. But I'm getting sidetracked.
+</p>
+<p>
+    To the point: <br/>
+    I believe that the policies defined in the `AuthorizationOptions` should be taken into account by the `AuthorizeRouteView`
+    and all other authorization components.
+</p>
+<p>
+    There also is another open <a href="https://github.com/dotnet/aspnetcore/issues/50111">"issue"</a> related to only the "DefaultPolicy",
+    which is, given his description, not the correct term. What the author actually described is the
+    <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizationoptions.fallbackpolicy#microsoft-aspnetcore-authorization-authorizationoptions-fallbackpolicy">FallbackPolicy-property</a>
+    from these options. It applies "when there are no authorization attributes or explicit policies set."
+    The <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authorization.authorizationoptions.defaultpolicy#microsoft-aspnetcore-authorization-authorizationoptions-defaultpolicy">DefaultPolicy-property</a>
+    on the other hand only "applies whenever authorization is required, but no specific policy is set."
+</p>
+<p>
+    The purpose of this project is to demonstrate my assumption and to provide a code base for further discussion.
+</p>
